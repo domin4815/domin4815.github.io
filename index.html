@@ -1,10 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>DD</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile-Friendly OSM Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        /* Define a CSS class for the map container */
+        #map {
+            height: 100vh;
+        }
+    </style>
 </head>
 <body>
-    <p>Terewresr</p>
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+        // Initialize the map
+        var map = L.map('map').setView([0, 0], 13); // Initial center and zoom level
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Initialize a marker for the user's location
+        var userLocationMarker = L.marker([0, 0]).addTo(map);
+
+        // Function to update the user's location every 3 seconds
+        function updateUserLocation() {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var lat = position.coords.latitude;
+                var lon = position.coords.longitude;
+
+                // Update the marker's position
+                userLocationMarker.setLatLng([lat, lon]);
+
+                // Center the map on the user's location
+                map.setView([lat, lon]);
+
+                // Call this function again after 3 seconds
+                setTimeout(updateUserLocation, 3000);
+            }, function (error) {
+                console.error("Error getting user's location: " + error.message);
+            });
+        }
+
+        // Call the function to start updating the user's location
+        updateUserLocation();
+    </script>
 </body>
 </html>
