@@ -8,7 +8,7 @@
     <style>
         /* Define a CSS class for the map container */
         #map {
-            height: 100vh;
+            height: 99vh;
         }
     </style>
 </head>
@@ -29,6 +29,9 @@
         // Initialize a marker for the user's location
         var userLocationMarker = L.marker([0, 0]).addTo(map);
 
+        // Create a hidden popup for the marker
+        var popup = L.popup({ autoClose: false, closeOnClick: false, autoPan: false });
+
         // Function to update the user's location with high accuracy
         function updateUserLocation() {
             navigator.geolocation.getCurrentPosition(function (position) {
@@ -41,6 +44,22 @@
                 // Center the map on the user's precise location
                 map.setView([lat, lon]);
 
+                // Read message from local storage or set current time
+                var message = localStorage.getItem("message");
+                if (!message) {
+                    message = new Date().toLocaleString();
+                    localStorage.setItem("message", message);
+                }
+
+                // Set the message as the popup content
+                popup.setContent(message);
+
+                // Bind the popup to the marker
+                userLocationMarker.bindPopup(popup);
+
+                // Open the popup
+                // userLocationMarker.openPopup();
+
                 // Call this function again after 3 seconds
                 setTimeout(updateUserLocation, 3000);
             }, function (error) {
@@ -50,6 +69,6 @@
 
         // Call the function to start updating the user's location
         updateUserLocation();
-    </script>
+</script>
 </body>
 </html>
