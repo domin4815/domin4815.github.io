@@ -41,6 +41,8 @@ places.forEach(place => {
            // Add your code to execute when the popup is opened here
            if (isPlayerClose(place)) {
                 marker.bindPopup(popupContent);
+           } else {
+                marker.bindPopup(popupContentToFar);
            }
            mapAutoCenter = false;
            console.log('Popup opened');
