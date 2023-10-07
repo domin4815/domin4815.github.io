@@ -13,47 +13,59 @@ function isPlayerClose(place) {
 
 }
 
+// Modal
+// Function to open the modal
+function openModal() {
+  const modal = document.getElementById("myModal");
+  modal.style.display = "block";
+}
+
+// Function to close the modal
+function closeModal() {
+  const modal = document.getElementById("myModal");
+  modal.style.display = "none";
+}
+
+// Close the modal if the user clicks anywhere outside of it
+window.onclick = function(event) {
+  const modal = document.getElementById("myModal");
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};
+
 // Initialize the map
 var map = L.map('map').setView([0, 0], 13); // Initial center and zoom level
 
 // Add places
 places.forEach(place => {
-       var placeIcon = L.icon({
+       const placeIcon = L.icon({
             iconUrl: place.icon,
             iconSize:     [50, 50], // size of the icon
             iconAnchor:   [0, 0], // point of the icon which will correspond to marker's location
        });
-       var marker = L.marker([place.lat, place.lon], {icon: placeIcon}).addTo(map);
-       var popupContent = `
-            <p>
-               ${place.story}
-            </p>
-            <img src=${place.image} alt="Image Alt Text" width="200">
-       `;
-       var popupContentToFar = `
-           <p>
-              You are too far from this place!
-           </p>
-      `;
-       marker.bindPopup(popupContentToFar);
+       const marker = L.marker([place.lat, place.lon], {icon: placeIcon}).addTo(map);
+
        // Event handler for when the popup is opened
-       marker.on('popupopen', function (e) {
-           // Add your code to execute when the popup is opened here
-           if (isPlayerClose(place)) {
-                marker.bindPopup(popupContent);
-           } else {
-                marker.bindPopup(popupContentToFar);
-           }
-           mapAutoCenter = false;
-           console.log('Popup opened');
+       marker.on('click', function (e) {
+        const modalContent = document.getElementById("modalContent");
+        if (isPlayerClose(place)) {
+             modalContent.textContent = place.story;
+             document.getElementById("modalImg").src = place.image;
+             document.getElementById("modalHeader").textContent = place.name;
+             document.getElementById("directions").href = "";
+
+        } else {
+             modalContent.textContent = "You are too far!"
+             document.getElementById("modalImg").src = "";
+             document.getElementById("modalHeader").textContent = "";
+             document.getElementById("directions").href = place.directions;
+
+        }
+        openModal();
+
        });
 
-       // Event handler for when the popup is closed
-       marker.on('popupclose', function (e) {
-           // Add your code to execute when the popup is closed here
-           mapAutoCenter = true;
-           console.log('Popup closed');
-       });
 });
 
 

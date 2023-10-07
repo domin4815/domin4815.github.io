@@ -30,9 +30,74 @@ var places = [
         lon: 17.4993981
     },
     {
-        name: "Test place",
-        image: "img/gunnlev.png",
-        icon: "img/test_icon.png",
+        name: "Assurs Runsten",
+        image: "img/assurs.png",
+        icon: "img/gunnlev_icon.png",
+        story: `
+        Assurs story`,
+        lat: 59.5082391,
+        lon: 17.6269997
+    },
+    {
+        name: "Processionsväg",
+        image: "img/procession.png",
+        icon: "img/gunnlev_icon.png",
+        story: `
+        Procession`,
+        lat: 59.5121274,
+        lon: 17.5461177
+    },
+    {
+        name: "Gravfält",
+        image: "img/procession.png",
+        icon: "img/gunnlev_icon.png",
+        story: `
+        Mounds`,
+        lat: 59.5073399,
+        lon: 17.5457507
+    },
+    {
+        name: "Biskoparnas Borg",
+        image: "img/procession.png",
+        icon: "img/gunnlev_icon.png",
+        story: `
+        Castle`,
+        lat: 59.4693411,
+        lon: 17.7927038
+    },
+  {
+        name: "Frölunda Sten",
+        image: "img/procession.png",
+        icon: "img/gunnlev_icon.png",
+        story: `
+        Natur`,
+        lat: 59.4455143,
+        lon: 17.6896505
+    },
+      {
+            name: "Ådö-Lagnö",
+            image: "img/procession.png",
+            icon: "img/gunnlev_icon.png",
+            directions: "https://maps.app.goo.gl/9AGTv1UBdJVHhqzEA",
+            story: `Temple`,
+            lat: 59.464271,
+            lon: 17.5822946
+        },
+      {
+            name: "Dalkarlsbacken",
+            image: "img/procession.png",
+            icon: "img/gunnlev_icon.png",
+            directions: "https://maps.app.goo.gl/9AGTv1UBdJVHhqzEA",
+            story: `Temple`,
+            lat: 59.4817618,
+            lon: 17.7639485
+        },
+    {
+
+        name: "Jarls hus",
+        image: "img/jarl.png",
+        icon: "img/jarl_icon.png",
+        directions: "https://maps.app.goo.gl/9AGTv1UBdJVHhqzEA",
         story: `
         Andvätt, Kår, Kiti, Bläse i Djärv, powracając z dalekich wypraw morskich,
         postanowili uczcić pamięć swoich poległych przyjaciół, Gunnlefa i Ingvara.
