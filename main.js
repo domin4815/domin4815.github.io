@@ -9,7 +9,7 @@ var player = {
 function isPlayerClose(place) {
     latDiff = Math.abs(place.lat - player.lat);
     lonDiff = Math.abs(place.lon - player.lon);
-    return latDiff + lonDiff < 0.0003;
+    return latDiff + lonDiff < 0.0005;
 
 }
 
@@ -34,8 +34,31 @@ window.onclick = function(event) {
   }
 };
 
+// Game controls
+const mapCenterButton = document.getElementById("auto-center");
+mapCenterButton.onclick = function () {
+    if (mapAutoCenter) {
+        mapAutoCenter = false;
+        mapCenterButton.style.color = "#FFFFFF";
+    } else {
+        mapAutoCenter = true;
+        mapCenterButton.style.color = "#000000";
+        updateUserLocation();
+    }
+};
+
 // Initialize the map
-var map = L.map('map').setView([0, 0], 13); // Initial center and zoom level
+const map = L.map('map').setView([0, 0], 13); // Initial center and zoom level
+let mapMoved = 0;
+map.on('movestart', () => {
+    mapMoved = mapMoved + 1;
+    if (mapMoved > 2) {
+        mapAutoCenter = false;
+        mapCenterButton.style.color = "#FFFFFF";
+        mapMoved = 0;
+    }
+
+});
 
 // Add places
 places.forEach(place => {
@@ -92,6 +115,7 @@ function updateUserLocation() {
 
         // Center the map on the user's precise location
         if (mapAutoCenter){
+            mapMoved = 0;
             map.setView([player.lat, player.lon]);
         }
 
