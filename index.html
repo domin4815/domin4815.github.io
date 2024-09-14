@@ -9,12 +9,18 @@
 <body>
 <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: true' renderer='antialias: true; alpha: true'>
     <a-camera gps-new-camera
-
+              simulateLatitude="50.084348"
+              simulateLongitude="19.923321"
               gpsTimeInterval="10"></a-camera>
     <a-entity
             gltf-model="url(img/tower.glb)"
+            gps-new-entity-place="latitude: 50.081640; longitude: 19.924784"
+            scale="10 10 10"></a-entity>
+    <a-entity
+            material='color: red'
+            geometry='primitive: box'
             gps-new-entity-place="latitude: 50.082879; longitude: 19.921587"
-            scale="1 1 1"></a-entity>
+            scale="10 10 10"></a-entity>
 </a-scene>
 </body>
 </html>
