@@ -7,9 +7,12 @@
     <script type='text/javascript' src='https://raw.githack.com/AR-js-org/AR.js/3.4.5/aframe/build/aframe-ar.js'></script>
 </head>
 <body>
-<a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false' renderer='antialias: true; alpha: true'>
-    <a-camera gps-new-camera simulateLatitude="50.082893" simulateLongitude="19.924757"></a-camera>
-    <a-entity material='color: red' geometry='primitive: box' gps-new-entity-place="latitude: 50.082849; longitude: 19.923860" scale="10 10 10"></a-entity>
+<a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: true' renderer='antialias: true; alpha: true'>
+    <a-camera gps-new-camera
+              simulateLatitude="50.082849"
+              simulateLongitude="19.923860"
+              gpsTimeInterval="10"></a-camera>
+    <a-entity material='color: red' geometry='primitive: box' gps-new-entity-place="latitude: 50.082893; longitude: 19.924757" scale="10 10 10"></a-entity>
 </a-scene>
 </body>
 </html>
