@@ -21,17 +21,17 @@
             gps-entity-place="latitude: 50.0826365; longitude: 19.9357228;"
     ></a-text>
 
-    <a-text
-            value="This content will always face you."
-            look-at="[gps-camera]"
-            scale="120 120 120"
-            gps-entity-place="latitude: 50.082855; longitude: 19.923860"
-    ></a-text>
-
-<!--    <a-entity-->
-<!--            gltf-model="url(img/tower.glb)"-->
+<!--    <a-text-->
+<!--            value="This content will always face you."-->
+<!--            look-at="[gps-camera]"-->
+<!--            scale="120 120 120"-->
 <!--            gps-entity-place="latitude: 50.082855; longitude: 19.923860"-->
-<!--            scale="100 100 100"></a-entity>-->
+<!--    ></a-text>-->
+
+    <a-entity
+            gltf-model="url(img/tower.glb)"
+            gps-entity-place="latitude: 50.082855; longitude: 19.923860"
+            scale="100 100 100"></a-entity>
 
     <a-camera gps-camera rotation-reader> </a-camera>
 </a-scene>
