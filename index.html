@@ -15,31 +15,12 @@
         arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
 >
 
-    <a-entity
-            material='color: red'
-            geometry='primitive: box'
-            gps-entity-place="latitude: 50.084448; longitude: 19.922058"
-            scale="10 10 10"></a-entity>
-
-
     <!--    south-->
     <a-entity
             gltf-model="url(img/palisade.glb)"
-            gps-entity-place="latitude: 50.082086; longitude: 19.924918"
+            gps-entity-place="latitude: 50.082412; longitude: 19.924737"
+            rotation="90 0 0"
             scale="10 10 10"></a-entity>
-
-    <!--    east-->
-    <a-entity
-            gltf-model="url(img/palisade.glb)"
-            gps-entity-place="latitude: 50.082800; longitude: 19.926217"
-            scale="10 10 10"></a-entity>
-
-    <!--    za kopcem-->
-    <a-entity
-            gltf-model="url(img/palisade.glb)"
-            gps-entity-place="latitude: 50.0598628; longitude: 19.845516"
-            scale="10 10 10"></a-entity>
-
 
     <a-camera gps-camera rotation-reader></a-camera>
 </a-scene>
