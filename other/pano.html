@@ -33,9 +33,8 @@
     ></a-text>
 
     <a-text
-            value="Grodzisko"
-            look-at="[gps-camera]"
-            scale="1 1 1"
+            value=""
+            scale="3 3 3"
             gps-entity-place="latitude: 50.082842; longitude: 19.923766;"
     >
         <a-entity
@@ -43,11 +42,47 @@
                 position="1.5 0 -1"
                 rotation="0 90 0"
                 scale="2 2.7 2.5"></a-entity>
+
+        <a-entity
+                gltf-model="url(../img/palisade.glb)"
+                position="-1 0 -1"
+                rotation="0 90 0"
+                scale="5 3 5"></a-entity>
+
+        <a-entity
+                gltf-model="url(../img/palisade.glb)"
+                position="-4 0 -2"
+                rotation="0 56 0"
+                scale="5 3 5"></a-entity>
+
+        <a-entity
+                gltf-model="url(../img/palisade.glb)"
+                position="4 0 -1"
+                rotation="0 90 0"
+                scale="5 3 5"></a-entity>
+
+        <a-entity
+                gltf-model="url(../img/palisade.glb)"
+                position="7 0 -2"
+                rotation="0 124 0"
+                scale="5 3 5"></a-entity>
+
+        <a-entity
+                gltf-model="url(../img/forest_hut.glb)"
+                position="4 0.5 -5"
+                rotation="0 200 0"
+                scale="1 1 1"></a-entity>
+
+        <a-entity
+                gltf-model="url(../img/forest_hut.glb)"
+                position="-2 1 -6"
+                rotation="0 -220 0"
+                scale="1 1 1"></a-entity>
     </a-text>
 
     <a-camera gps-camera rotation-reader></a-camera>
 </a-scene>
 </body>
-<script>alert(3);</script>
+<script>alert(4);</script>
 
 </html>
