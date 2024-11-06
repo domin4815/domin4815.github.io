@@ -11,11 +11,13 @@
 <body>
 <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: true'
          renderer='antialias: true; alpha: true'>
-    <a-camera gps-new-camera=''></a-camera>
+    <a-camera gps-new-camera rotation-reader></a-camera>
+
 
     <a-text
             value=""
-            scale="1 1 1"
+            look-at="[gps-new-camera]"
+            scale="3 3 3"
             gps-new-entity-place="latitude: 50.082842; longitude: 19.923766"
             >
 
@@ -63,5 +65,5 @@
     </a-text>
 </a-scene>
 </body>
-<script>alert(30);</script>
+<script>alert(5);</script>
 </html>
