@@ -11,49 +11,56 @@
             gps-entity-place="latitude: 50.077596; longitude: 19.785851;"
             position="0 1 -1">
 
-        <a-entity
-                gltf-model="url(img/wooden_gate.glb)"
-                position="1.5 0 -1"
-                rotation="0 90 0"
-                scale="2 2.7 2.5"></a-entity>
+        <!-- Główny wał - podkowa -->
+        <a-entity id="main-rampart"></a-entity>
 
-        <a-entity
-                gltf-model="url(img/palisade.glb)"
-                position="-1 0 -1"
-                rotation="0 90 0"
-                scale="5 3 5"></a-entity>
+        <!-- Wał II - pierwszy dodatkowy łuk -->
+        <a-entity id="secondary-rampart"></a-entity>
 
-        <a-entity
-                gltf-model="url(img/palisade.glb)"
-                position="-4 0 -2"
-                rotation="0 56 0"
-                scale="5 3 5"></a-entity>
+        <!-- Wał III - drugi dodatkowy łuk -->
+        <a-entity id="tertiary-rampart"></a-entity>
 
-        <a-entity
-                gltf-model="url(img/palisade.glb)"
-                position="4 0 -1"
-                rotation="0 90 0"
-                scale="5 3 5"></a-entity>
+        <!-- Mgła -->
+        <a-entity particle-system="preset: dust; particleCount: 50000; color: #ffffff; size: 0.2; opacity: 0.9;"></a-entity>
 
-        <a-entity
-                gltf-model="url(img/palisade.glb)"
-                position="7 0 -2"
-                rotation="0 124 0"
-                scale="5 3 5"></a-entity>
+        <script>
+    function createRampart(entityId, segments, radius, offsetY, height, color) {
+      const rampart = document.querySelector(entityId);
+      for (let i = 0; i < segments; i++) {
+        const angle = (i / segments) * Math.PI; // półokrąg (podkowa)
+        const x = radius * Math.cos(angle);
+        const z = radius * Math.sin(angle);
+        const rotation = (angle * 180) / Math.PI;
 
-        <a-entity
-                gltf-model="url(img/forest_hut.glb)"
-                position="4 0.5 -5"
-                rotation="0 200 0"
-                scale="1 1 1"></a-entity>
+        const box = document.createElement('a-box');
+        box.setAttribute('position', `${x} ${offsetY} ${z}`);
+        box.setAttribute('rotation', `0 ${-rotation} 0`);
+        box.setAttribute('width', 0.2);
+        box.setAttribute('height', height);
+        box.setAttribute('depth', 2);
+        box.setAttribute('color', color);
+        box.setAttribute('opacity', 0.5);
+        box.setAttribute('transparent', true);
 
-        <a-entity
-                gltf-model="url(img/forest_hut.glb)"
-                position="-2 1 -6"
-                rotation="0 -220 0"
-                scale="1 1 1"></a-entity>
+        // Animacja przesunięcia (efekt drżenia)
+        box.setAttribute('animation', `property: position; to: ${x} ${offsetY + 0.1} ${z};
+                                        dir: alternate; dur: 3000; loop: true`);
+
+        rampart.appendChild(box);
+      }
+    }
+
+    // Główny wał - podkowa, wyższy
+    createRampart('#main-rampart', 25, 20, 1, 3, '#444444');
+
+    // Wał II - pierwszy łuk od północy, średnia wysokość
+    createRampart('#secondary-rampart', 30, 25, 0.5, 2, '#666666');
+
+    // Wał III - drugi łuk od północy, niższy
+    createRampart('#tertiary-rampart', 40, 30, 0, 1, '#888888');
+  </script>
+
     </a-text>
-
 
     <a-plane position="0 0 0" rotation="-90 0 0" width="10" height="10" color="#7BC8A4"></a-plane>
     <a-sky color="#BCECEC"></a-sky>
