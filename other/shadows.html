@@ -58,18 +58,18 @@
         box.setAttribute('transparent', true);
 
         // Animacja przesunięcia (efekt drżenia)
-        box.setAttribute('animation', `property: position; to: ${x} ${offsetY + 0.1} ${z};
-                                        dir: alternate; dur: 3000; loop: true`);
+       // box.setAttribute('animation', `property: position; to: ${x} ${offsetY + 0.1} ${z};
+         //                               dir: alternate; dur: 3000; loop: true`);
 
         rampart.appendChild(box);
       }
     }
 
     // Główny wał - podkowa, wyższy
-    createRampart('#main-rampart', 25, 20, 1, 1.5, '#E4080A');
+    createRampart('#main-rampart', 25, 20, 0, 1.5, '#E4080A');
 
     // Wał II - pierwszy łuk od północy, średnia wysokość
-    createRampart('#secondary-rampart', 30, 25, 0.5, 1, '#F6C709');
+    createRampart('#secondary-rampart', 30, 25, 0, 1, '#F6C709');
 
     // Wał III - drugi łuk od północy, niższy
     createRampart('#tertiary-rampart', 40, 30, 0, 0.5, '#9EB717');
@@ -77,7 +77,7 @@
         </script>
     </a-text>
 
-    <a-camera gps-camera rotation-reader gpsMinDistance="1" positionMinAccuracy="30"></a-camera>
+    <a-camera gps-camera rotation-reader gpsMinDistance="1" positionMinAccuracy="30" gpsTimeInterval="1"></a-camera>
 </a-scene>
 </body>
 <script>alert(6);</script>
