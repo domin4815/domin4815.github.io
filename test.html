@@ -5,6 +5,62 @@
 <body>
 <a-scene>
 
+    <a-text
+            value=""
+            scale="1 1 1"
+            gps-entity-place="latitude: 49.665806; longitude: 21.175666;"
+    >
+
+        <!-- Główny wał - podkowa -->
+        <a-entity id="main-rampart"></a-entity>
+
+        <!-- Wał II - pierwszy dodatkowy łuk -->
+        <a-entity id="secondary-rampart"></a-entity>
+
+        <!-- Wał III - drugi dodatkowy łuk -->
+        <a-entity id="tertiary-rampart"></a-entity>
+
+        <!-- Mgła -->
+        <a-entity particle-system="preset: dust; particleCount: 50000; color: #ffffff; size: 0.2; opacity: 0.9;"></a-entity>
+
+        <script>
+    function createRampart(entityId, segments, radius, offsetY, height, color) {
+      const rampart = document.querySelector(entityId);
+      for (let i = 0; i < segments; i++) {
+        const angle = (i / segments) * Math.PI; // półokrąg (podkowa)
+        const x = radius * Math.cos(angle);
+        const z = radius * Math.sin(angle);
+        const rotation = (angle * 180) / Math.PI;
+
+        const box = document.createElement('a-box');
+        box.setAttribute('position', `${x} ${offsetY} ${z}`);
+        box.setAttribute('rotation', `0 ${-rotation} 0`);
+        box.setAttribute('width', 0.4);
+        box.setAttribute('height', height);
+        box.setAttribute('depth', 2);
+        box.setAttribute('color', color);
+        box.setAttribute('opacity', 0.5);
+        box.setAttribute('transparent', true);
+
+        // Animacja przesunięcia (efekt drżenia)
+        box.setAttribute('animation', `property: position; to: ${x} ${offsetY + 0.1} ${z};
+                                        dir: alternate; dur: 3000; loop: true`);
+
+        rampart.appendChild(box);
+      }
+    }
+
+    // Główny wał - podkowa, wyższy
+    createRampart('#main-rampart', 25, 20, 1, 1.5, '#E4080A');
+
+    // Wał II - pierwszy łuk od północy, średnia wysokość
+    createRampart('#secondary-rampart', 30, 25, 0.5, 1, '#F6C709');
+
+    // Wał III - drugi łuk od północy, niższy
+    createRampart('#tertiary-rampart', 40, 30, 0, 0.5, '#9EB717');
+  </script>
+    </a-text>
+
 
     <a-plane
             gps-entity-place="latitude: 50.083838; longitude: 19.927055;"

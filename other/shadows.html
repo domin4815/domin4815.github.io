@@ -22,7 +22,7 @@
     <a-text
             value=""
             scale="1 1 1"
-            gps-entity-place="latitude: 50.060902; longitude: 19.904467;"
+            gps-entity-place="latitude: 49.665806; longitude: 21.175666;"
     >
 
         <!-- Główny wał - podkowa -->
@@ -35,7 +35,8 @@
         <a-entity id="tertiary-rampart"></a-entity>
 
         <!-- Mgła -->
-        <a-entity particle-system="preset: dust; particleCount: 50000; color: #ffffff; size: 0.2; opacity: 0.9;"></a-entity>
+        <a-entity
+                particle-system="preset: dust; particleCount: 50000; color: #ffffff; size: 0.2; opacity: 0.9;"></a-entity>
 
         <script>
     function createRampart(entityId, segments, radius, offsetY, height, color) {
@@ -49,7 +50,7 @@
         const box = document.createElement('a-box');
         box.setAttribute('position', `${x} ${offsetY} ${z}`);
         box.setAttribute('rotation', `0 ${-rotation} 0`);
-        box.setAttribute('width', 0.2);
+        box.setAttribute('width', 0.4);
         box.setAttribute('height', height);
         box.setAttribute('depth', 2);
         box.setAttribute('color', color);
@@ -65,14 +66,15 @@
     }
 
     // Główny wał - podkowa, wyższy
-    createRampart('#main-rampart', 25, 20, 1, 3, '#444444');
+    createRampart('#main-rampart', 25, 20, 1, 1.5, '#E4080A');
 
     // Wał II - pierwszy łuk od północy, średnia wysokość
-    createRampart('#secondary-rampart', 30, 25, 0.5, 2, '#666666');
+    createRampart('#secondary-rampart', 30, 25, 0.5, 1, '#F6C709');
 
     // Wał III - drugi łuk od północy, niższy
-    createRampart('#tertiary-rampart', 40, 30, 0, 1, '#888888');
-  </script>
+    createRampart('#tertiary-rampart', 40, 30, 0, 0.5, '#9EB717');
+
+        </script>
     </a-text>
 
     <a-camera gps-camera rotation-reader gpsMinDistance="1" positionMinAccuracy="30"></a-camera>
