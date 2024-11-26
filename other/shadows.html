@@ -16,7 +16,7 @@
 <body>
 <a-scene
         vr-mode-ui="enabled: false"
-        arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
+        arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false; trackingMethod: best; enableGPSDebug: true"
         fog="type: exponential; color: #BCECEC; density: 0.05"
 >
 
@@ -95,9 +95,34 @@
         // Przypisanie komponentu do sceny
         document.querySelector('a-scene').setAttribute('dynamic-opacity', '');
 
+
+        // Interpolacja GPS
+        AFRAME.registerComponent('smooth-gps', {
+            schema: {
+                speed: { type: 'number', default: 5 } // szybkość interpolacji
+            },
+            init: function () {
+                this.targetPosition = new THREE.Vector3();
+                this.currentPosition = new THREE.Vector3();
+            },
+            tick: function () {
+                const cameraEl = this.el;
+                const cameraPosition = new THREE.Vector3();
+                cameraEl.object3D.getWorldPosition(cameraPosition);
+
+                this.targetPosition.copy(cameraPosition);
+                this.currentPosition.lerp(this.targetPosition, this.data.speed * 0.01);
+
+                this.el.setAttribute('position', this.currentPosition);
+            }
+        });
+
+        document.querySelector('a-camera').setAttribute('smooth-gps', 'speed: 5');
+
+
     </script>
 
-    <a-camera gps-camera rotation-reader gpsMinDistance="1" positionMinAccuracy="30" gpsTimeInterval="1"></a-camera>
+    <a-camera gps-camera rotation-reader gpsMinDistance="0.5" positionMinAccuracy="10" gpsTimeInterval="0.5"></a-camera>
 </a-scene>
 </body>
 <script>alert(7);</script>
