@@ -3,63 +3,69 @@
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
 </head>
 <body>
-<a-scene>
-
+<a-scene fog="type: exponential; color: #BCECEC; density: 0.05">
     <a-text
             value=""
-            look-at="[gps-camera]"
             scale="3 3 3"
-            gps-entity-place="latitude: 49.665806; longitude: 21.175666;"
-    >
+            gps-entity-place="latitude: 49.665806; longitude: 21.175666;">
+        <!-- Główny wał - podkowa -->
+        <a-entity id="main-rampart"></a-entity>
 
+        <!-- Wał II - pierwszy dodatkowy łuk -->
+        <a-entity id="secondary-rampart"></a-entity>
 
-        <a-entity
-                gltf-model="url(../img/wooden_gate.glb)"
-                position="1.5 0 -1"
-                rotation="0 90 0"
-                scale="2 2.7 2.5"></a-entity>
-
-        <a-entity
-                gltf-model="url(../img/palisade.glb)"
-                position="-1 0 -1"
-                rotation="0 90 0"
-                scale="5 3 5"></a-entity>
-
-        <a-entity
-                gltf-model="url(../img/palisade.glb)"
-                position="-4 0 -2"
-                rotation="0 56 0"
-                scale="5 3 5"></a-entity>
-
-        <a-entity
-                gltf-model="url(../img/palisade.glb)"
-                position="4 0 -1"
-                rotation="0 90 0"
-                scale="5 3 5"></a-entity>
-
-        <a-entity
-                gltf-model="url(../img/palisade.glb)"
-                position="7 0 -2"
-                rotation="0 124 0"
-                scale="5 3 5"></a-entity>
-
-        <a-entity
-                gltf-model="url(../img/forest_hut.glb)"
-                position="4 0.5 -5"
-                rotation="0 200 0"
-                scale="1 1 1"></a-entity>
-
-        <a-entity
-                gltf-model="url(../img/forest_hut.glb)"
-                position="-2 1 -6"
-                rotation="0 -220 0"
-                scale="1 1 1"></a-entity>
+        <!-- Wał III - drugi dodatkowy łuk -->
+        <a-entity id="tertiary-rampart"></a-entity>
     </a-text>
 
+    <!-- Mgła z systemu cząsteczek -->
+    <a-entity
+            particle-system="
+                preset: dust;
+                particleCount: 100000;
+                color: #ffffff;
+                size: 0.5;
+                opacity: 0.7;
+                velocityValue: 0.1;
+                positionSpread: 30 10 30;
+                maxAge: 2;
+                randomizeVelocity: true;"></a-entity>
 
+    <!-- Skrypty generujące wały -->
+    <script>
+    function createRampart(entityId, segments, radius, offsetY, height, color) {
+      const rampart = document.querySelector(entityId);
+      for (let i = 0; i < segments; i++) {
+        const angle = (i / segments) * Math.PI; // półokrąg (podkowa)
+        const x = radius * Math.cos(angle);
+        const z = radius * Math.sin(angle);
+        const rotation = (angle * 180) / Math.PI;
+
+        const box = document.createElement('a-box');
+        box.setAttribute('position', `${x} ${offsetY} ${z}`);
+        box.setAttribute('rotation', `0 ${-rotation} 0`);
+        box.setAttribute('width', 0.4);
+        box.setAttribute('height', height);
+        box.setAttribute('depth', 2);
+        box.setAttribute('color', color);
+        box.setAttribute('opacity', 0.5);
+        box.setAttribute('transparent', true);
+
+        rampart.appendChild(box);
+      }
+    }
+
+    // Główny wał - podkowa, wyższy
+    createRampart('#main-rampart', 25, 20, 0, 1.5, '#E4080A');
+
+    // Wał II - pierwszy łuk od północy, średnia wysokość
+    createRampart('#secondary-rampart', 30, 25, 0, 1, '#F6C709');
+
+    // Wał III - drugi łuk od północy, niższy
+    createRampart('#tertiary-rampart', 40, 30, 0, 0.5, '#9EB717');
+    </script>
 
     <a-sky color="#BCECEC"></a-sky>
 </a-scene>
 </body>
-</html>
 </html>

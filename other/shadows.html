@@ -17,14 +17,13 @@
 <a-scene
         vr-mode-ui="enabled: false"
         arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
+        fog="type: exponential; color: #BCECEC; density: 0.05"
 >
 
     <a-text
             value=""
-            scale="1 1 1"
-            gps-entity-place="latitude: 49.665806; longitude: 21.175666;"
-    >
-
+            scale="3 3 3"
+            gps-entity-place="latitude: 50.082961; longitude: 19.925074;">
         <!-- Główny wał - podkowa -->
         <a-entity id="main-rampart"></a-entity>
 
@@ -33,12 +32,23 @@
 
         <!-- Wał III - drugi dodatkowy łuk -->
         <a-entity id="tertiary-rampart"></a-entity>
+    </a-text>
 
-        <!-- Mgła -->
-        <a-entity
-                particle-system="preset: dust; particleCount: 50000; color: #ffffff; size: 0.2; opacity: 0.9;"></a-entity>
+    <!-- Mgła z systemu cząsteczek -->
+    <a-entity
+            particle-system="
+                preset: dust;
+                particleCount: 100000;
+                color: #ffffff;
+                size: 0.5;
+                opacity: 0.7;
+                velocityValue: 0.1;
+                positionSpread: 30 10 30;
+                maxAge: 2;
+                randomizeVelocity: true;"></a-entity>
 
-        <script>
+    <!-- Skrypty generujące wały -->
+    <script>
     function createRampart(entityId, segments, radius, offsetY, height, color) {
       const rampart = document.querySelector(entityId);
       for (let i = 0; i < segments; i++) {
@@ -57,10 +67,6 @@
         box.setAttribute('opacity', 0.5);
         box.setAttribute('transparent', true);
 
-        // Animacja przesunięcia (efekt drżenia)
-       // box.setAttribute('animation', `property: position; to: ${x} ${offsetY + 0.1} ${z};
-         //                               dir: alternate; dur: 3000; loop: true`);
-
         rampart.appendChild(box);
       }
     }
@@ -73,9 +79,7 @@
 
     // Wał III - drugi łuk od północy, niższy
     createRampart('#tertiary-rampart', 40, 30, 0, 0.5, '#9EB717');
-
-        </script>
-    </a-text>
+    </script>
 
     <a-camera gps-camera rotation-reader gpsMinDistance="1" positionMinAccuracy="30" gpsTimeInterval="1"></a-camera>
 </a-scene>
