@@ -19,12 +19,20 @@
         arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false; trackingMethod: best; enableGPSDebug: true"
         fog="type: exponential; color: #BCECEC; density: 0.05"
 >
+    <a-text
+            value="Grodzisko"
+            look-at="[gps-camera]"
+            scale="10 10 10"
+            position="0 10 0"
+            gps-entity-place="latitude: 50.062066; longitude: 19.903033;"
+    >
 
+    </a-text>
     <a-text
             value=""
             look-at="[gps-camera]"
             scale="3 3 3"
-            gps-entity-place="latitude: 50.082961; longitude: 19.925074;">
+            gps-entity-place="latitude: 50.062066; longitude: 19.903033;">
         <!-- Główny wał - podkowa -->
         <a-entity id="main-rampart"></a-entity>
 
@@ -94,31 +102,6 @@
 
         // Przypisanie komponentu do sceny
         document.querySelector('a-scene').setAttribute('dynamic-opacity', '');
-
-
-        // Interpolacja GPS
-        AFRAME.registerComponent('smooth-gps', {
-            schema: {
-                speed: { type: 'number', default: 5 } // szybkość interpolacji
-            },
-            init: function () {
-                this.targetPosition = new THREE.Vector3();
-                this.currentPosition = new THREE.Vector3();
-            },
-            tick: function () {
-                const cameraEl = this.el;
-                const cameraPosition = new THREE.Vector3();
-                cameraEl.object3D.getWorldPosition(cameraPosition);
-
-                this.targetPosition.copy(cameraPosition);
-                this.currentPosition.lerp(this.targetPosition, this.data.speed * 0.01);
-
-                this.el.setAttribute('position', this.currentPosition);
-            }
-        });
-
-        document.querySelector('a-camera').setAttribute('smooth-gps', 'speed: 5');
-
 
     </script>
 
