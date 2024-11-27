@@ -13,14 +13,13 @@
         vr-mode-ui="enabled: false"
         arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false; trackingMethod: best; enableGPSDebug: true"
 >
-    <a-text
-            value=""
-            scale="3 3 3"
-            gps-entity-place="latitude: 50.082900; longitude: 19.923808;">
+    <a-entity
+            scale="1 1 1"
+            gps-entity-place="latitude: 50.081647; longitude: 19.924720;">
         <a-entity id="main-rampart"></a-entity>
         <a-entity id="secondary-rampart"></a-entity>
         <a-entity id="tertiary-rampart"></a-entity>
-    </a-text>
+    </a-entity>
 
     <script>
         function createRampart(entityId, segments, radius, offsetY, height, color) {
@@ -62,7 +61,7 @@
                         const boxPosition = new THREE.Vector3();
                         box.object3D.getWorldPosition(boxPosition);
                         const distance = cameraPosition.distanceTo(boxPosition);
-                        const opacity = Math.max(0, 1 - distance / 50); // np. 50 jednostek to maksymalna odległość
+                        const opacity = Math.max(0, 1 - distance / 500); // np. 500 jednostek to maksymalna odległość
                         box.setAttribute('opacity', opacity);
                     });
                 };
@@ -77,6 +76,6 @@
     <a-camera gps-camera rotation-reader gpsMinDistance="0.5" positionMinAccuracy="30" gpsTimeInterval="0.5"></a-camera>
 </a-scene>
 </body>
-<script>alert(3);</script>
+<script>alert(1);</script>
 
 </html>
