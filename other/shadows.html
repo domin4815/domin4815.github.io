@@ -58,12 +58,11 @@
                 this.tick = () => {
                     const cameraPosition = new THREE.Vector3();
                     cameraEl.object3D.getWorldPosition(cameraPosition);
-
                     boxes.forEach(box => {
                         const boxPosition = new THREE.Vector3();
                         box.object3D.getWorldPosition(boxPosition);
                         const distance = cameraPosition.distanceTo(boxPosition);
-                        const opacity = Math.max(0, 1 - distance / 1000); // np. 1000 jednostek to maksymalna odległość
+                        const opacity = Math.max(0, 1 - distance / 50); // np. 50 jednostek to maksymalna odległość
                         box.setAttribute('opacity', opacity);
                     });
                 };
@@ -78,6 +77,6 @@
     <a-camera gps-camera rotation-reader gpsMinDistance="0.5" positionMinAccuracy="30" gpsTimeInterval="0.5"></a-camera>
 </a-scene>
 </body>
-<script>alert(2);</script>
+<script>alert(3);</script>
 
 </html>
