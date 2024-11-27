@@ -15,7 +15,7 @@
 >
     <a-entity
             scale="1 1 1"
-            gps-entity-place="latitude: 50.081647; longitude: 19.924720;">
+            gps-entity-place="latitude: 50.082796; longitude: 19.923808;">
         <a-entity id="main-rampart"></a-entity>
         <a-entity id="secondary-rampart"></a-entity>
         <a-entity id="tertiary-rampart"></a-entity>
@@ -44,7 +44,7 @@
             }
         }
 
-        createRampart('#main-rampart', 25, 20, 0, 1.5, '#E4080A');
+        createRampart('#main-rampart', 25, 20, 0, 1.5, '#4D4A45');
         createRampart('#secondary-rampart', 30, 25, 0, 1, '#F6C709');
         createRampart('#tertiary-rampart', 40, 30, 0, 0.5, '#9EB717');
 
@@ -61,7 +61,7 @@
                         const boxPosition = new THREE.Vector3();
                         box.object3D.getWorldPosition(boxPosition);
                         const distance = cameraPosition.distanceTo(boxPosition);
-                        const opacity = Math.max(0, 1 - distance / 500); // np. 500 jednostek to maksymalna odległość
+                        const opacity = Math.max(0, 1 - distance / 100); // np. 100 jednostek to maksymalna odległość
                         box.setAttribute('opacity', opacity);
                     });
                 };
@@ -76,6 +76,6 @@
     <a-camera gps-camera rotation-reader gpsMinDistance="0.5" positionMinAccuracy="30" gpsTimeInterval="0.5"></a-camera>
 </a-scene>
 </body>
-<script>alert(1);</script>
+<script>alert(2);</script>
 
 </html>
