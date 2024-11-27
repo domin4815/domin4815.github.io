@@ -24,7 +24,7 @@
             look-at="[gps-camera]"
             scale="10 10 10"
             position="0 10 0"
-            gps-entity-place="latitude: 50.062066; longitude: 19.903033;"
+            gps-entity-place="latitude: 50.082879; longitude: 19.924763;">
     >
 
     </a-text>
@@ -93,7 +93,7 @@
                         const distance = cameraPosition.distanceTo(boxPosition);
 
                         // Ustawienie opacity w zależności od odległości
-                        const opacity = Math.max(0, 1 - distance / 50); // np. 50 jednostek to maksymalna odległość
+                        const opacity = Math.max(0, 1 - distance / 100); // np. 100 jednostek to maksymalna odległość
                         box.setAttribute('opacity', opacity);
                     });
                 };
@@ -108,6 +108,6 @@
     <a-camera gps-camera rotation-reader gpsMinDistance="0.5" positionMinAccuracy="10" gpsTimeInterval="0.5"></a-camera>
 </a-scene>
 </body>
-<script>alert(1);</script>
+<script>alert(2);</script>
 
 </html>
