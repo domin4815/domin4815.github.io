@@ -13,6 +13,8 @@
         vr-mode-ui="enabled: false"
         arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false; trackingMethod: best; enableGPSDebug: true"
 >
+
+
     <a-entity
             scale="1 1 1"
             gps-entity-place="latitude: 50.082796; longitude: 19.923808;">
@@ -44,9 +46,9 @@
             }
         }
 
-        createRampart('#main-rampart', 25, 20, 0, 1.5, '#4D4A45');
-        createRampart('#secondary-rampart', 30, 25, 0, 1, '#F6C709');
-        createRampart('#tertiary-rampart', 40, 30, 0, 0.5, '#9EB717');
+        createRampart('#main-rampart', 80, 60, 0, 1.5, '#4D4A45');
+        createRampart('#secondary-rampart', 110, 75, 0, 1, '#F6C709');
+        createRampart('#tertiary-rampart', 130, 90, 0, 0.5, '#9EB717');
 
         AFRAME.registerComponent('dynamic-opacity', {
             init: function () {
@@ -76,6 +78,6 @@
     <a-camera gps-camera rotation-reader gpsMinDistance="0.5" positionMinAccuracy="30" gpsTimeInterval="0.5"></a-camera>
 </a-scene>
 </body>
-<script>alert(2);</script>
+<script>alert(3);</script>
 
 </html>

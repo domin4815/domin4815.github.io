@@ -4,27 +4,15 @@
 </head>
 <body>
 <a-scene>
-    <a-text
-            value="Grodzisko"
-            look-at="[gps-camera]"
-            scale="10 10 10"
-            position="0 10 0"
-            gps-entity-place="latitude: 50.061942; longitude: 19.903034;">
-    </a-text>
-    <a-text
-            value=""
-            look-at="[gps-camera]"
-            scale="3 3 3"
-            gps-entity-place="latitude: 50.061942; longitude: 19.903034;">
-        <!-- Główny wał - podkowa -->
+
+
+    <a-entity
+            scale="1 1 1"
+            gps-entity-place="latitude: 50.082796; longitude: 19.923808;">
         <a-entity id="main-rampart"></a-entity>
-
-        <!-- Wał II - pierwszy dodatkowy łuk -->
         <a-entity id="secondary-rampart"></a-entity>
-
-        <!-- Wał III - drugi dodatkowy łuk -->
         <a-entity id="tertiary-rampart"></a-entity>
-    </a-text>
+    </a-entity>
 
     <script>
         function createRampart(entityId, segments, radius, offsetY, height, color) {
@@ -49,16 +37,10 @@
             }
         }
 
-        // Główny wał - podkowa, wyższy
-        createRampart('#main-rampart', 25, 20, 0, 1.5, '#E4080A');
+        createRampart('#main-rampart', 80, 60, 0, 1.5, '#4D4A45');
+        createRampart('#secondary-rampart', 110, 75, 0, 1, '#F6C709');
+        createRampart('#tertiary-rampart', 130, 90, 0, 0.5, '#9EB717');
 
-        // Wał II - pierwszy łuk od północy, średnia wysokość
-        createRampart('#secondary-rampart', 30, 25, 0, 1, '#F6C709');
-
-        // Wał III - drugi łuk od północy, niższy
-        createRampart('#tertiary-rampart', 40, 30, 0, 0.5, '#9EB717');
-
-        // Dynamiczne sterowanie opacity
         AFRAME.registerComponent('dynamic-opacity', {
             init: function () {
                 const cameraEl = document.querySelector('[camera]');
@@ -68,14 +50,10 @@
                 this.tick = () => {
                     const cameraPosition = new THREE.Vector3();
                     cameraEl.object3D.getWorldPosition(cameraPosition);
-
                     boxes.forEach(box => {
                         const boxPosition = new THREE.Vector3();
                         box.object3D.getWorldPosition(boxPosition);
-
                         const distance = cameraPosition.distanceTo(boxPosition);
-
-                        // Ustawienie opacity w zależności od odległości
                         const opacity = Math.max(0, 1 - distance / 100); // np. 100 jednostek to maksymalna odległość
                         box.setAttribute('opacity', opacity);
                     });
