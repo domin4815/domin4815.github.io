@@ -17,22 +17,20 @@
 <a-scene
         vr-mode-ui="enabled: false"
         arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false; trackingMethod: best; enableGPSDebug: true"
-        fog="type: exponential; color: #BCECEC; density: 0.05"
 >
     <a-text
             value="Grodzisko"
             look-at="[gps-camera]"
             scale="10 10 10"
             position="0 10 0"
-            gps-entity-place="latitude: 50.082879; longitude: 19.924763;">
+            gps-entity-place="latitude: 50.061942; longitude: 19.903034;">
     >
-
     </a-text>
     <a-text
             value=""
             look-at="[gps-camera]"
             scale="3 3 3"
-            gps-entity-place="latitude: 50.082879; longitude: 19.924763;">
+            gps-entity-place="latitude: 50.061942; longitude: 19.903034;">
         <!-- Główny wał - podkowa -->
         <a-entity id="main-rampart"></a-entity>
 
@@ -93,7 +91,7 @@
                         const distance = cameraPosition.distanceTo(boxPosition);
 
                         // Ustawienie opacity w zależności od odległości
-                        const opacity = Math.max(0, 1 - distance / 100); // np. 100 jednostek to maksymalna odległość
+                        const opacity = Math.max(0, 1 - distance / 30); // np. 100 jednostek to maksymalna odległość
                         box.setAttribute('opacity', opacity);
                     });
                 };
@@ -105,9 +103,9 @@
 
     </script>
 
-    <a-camera gps-camera rotation-reader gpsMinDistance="0.5" positionMinAccuracy="10" gpsTimeInterval="0.5"></a-camera>
+    <a-camera gps-camera rotation-reader gpsMinDistance="0.5" positionMinAccuracy="30" gpsTimeInterval="0.5"></a-camera>
 </a-scene>
 </body>
-<script>alert(2);</script>
+<script>alert(4);</script>
 
 </html>
