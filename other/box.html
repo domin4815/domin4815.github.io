@@ -27,6 +27,14 @@
                 position="0 10 0"
         ></a-text>
     </a-box>
+    <a-text
+            id="distance-display"
+            value="Distance: Calculating..."
+            position="0 2 -3"
+            color="black"
+            align="center"
+            scale="2 2 2">
+    </a-text>
     <script>
 
         AFRAME.registerComponent('dynamic-opacity', {
@@ -34,20 +42,28 @@
                 const cameraEl = document.querySelector('[camera]');
                 const scene = this.el.sceneEl;
                 const boxes = scene.querySelectorAll('a-box');
+                const distanceDisplay = document.querySelector('#distance-display');
 
                 this.tick = () => {
                     const cameraPosition = new THREE.Vector3();
                     cameraEl.object3D.getWorldPosition(cameraPosition);
+
                     boxes.forEach(box => {
                         const boxPosition = new THREE.Vector3();
                         box.object3D.getWorldPosition(boxPosition);
                         const distance = cameraPosition.distanceTo(boxPosition);
+
+                        // Update UI with distance
+                        distanceDisplay.setAttribute('value', `Distance to box: ${distance.toFixed(2)} meters`);
+
+                        // Adjust opacity based on distance
                         const opacity = Math.max(0, 1 - distance / 50);
                         box.setAttribute('opacity', opacity);
                     });
                 };
             }
         });
+
         document.querySelector('a-scene').setAttribute('dynamic-opacity', '');
 
         AFRAME.registerComponent('smooth-gps', {
@@ -77,6 +93,6 @@
     <a-camera smooth-gps gps-camera rotation-reader gpsMinDistance="0.5" positionMinAccuracy="30" gpsTimeInterval="0.5"></a-camera>
 </a-scene>
 </body>
-<script>alert(3);</script>
+<script>alert(1);</script>
 
 </html>
