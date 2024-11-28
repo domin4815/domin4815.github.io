@@ -73,11 +73,31 @@
         // Przypisanie komponentu do sceny
         document.querySelector('a-scene').setAttribute('dynamic-opacity', '');
 
+        AFRAME.registerComponent('smooth-gps', {
+            schema: {
+                speed: { type: 'number', default: 5 } // szybkość interpolacji
+            },
+            init: function () {
+                this.targetPosition = new THREE.Vector3();
+                this.currentPosition = new THREE.Vector3();
+            },
+            tick: function () {
+                const cameraEl = this.el;
+                const cameraPosition = new THREE.Vector3();
+                cameraEl.object3D.getWorldPosition(cameraPosition);
+
+                this.targetPosition.copy(cameraPosition);
+                this.currentPosition.lerp(this.targetPosition, this.data.speed * 0.01);
+
+                this.el.setAttribute('position', this.currentPosition);
+            }
+        });
+
     </script>
 
-    <a-camera gps-camera rotation-reader gpsMinDistance="0.5" positionMinAccuracy="30" gpsTimeInterval="0.5"></a-camera>
+    <a-camera smooth-gps gps-camera rotation-reader gpsMinDistance="0.5" positionMinAccuracy="30" gpsTimeInterval="0.5"></a-camera>
 </a-scene>
 </body>
-<script>alert(3);</script>
+<script>alert(4);</script>
 
 </html>
