@@ -17,7 +17,7 @@
 
     <a-entity
             scale="1 1 1"
-            gps-entity-place="latitude: 50.082796; longitude: 19.923808;">
+            gps-entity-place="latitude: 50.061856; longitude: 19.902868;">
         <a-entity id="main-rampart"></a-entity>
         <a-entity id="secondary-rampart"></a-entity>
         <a-entity id="tertiary-rampart"></a-entity>
@@ -35,7 +35,7 @@
                 const box = document.createElement('a-box');
                 box.setAttribute('position', `${x} ${offsetY} ${z}`);
                 box.setAttribute('rotation', `0 ${-rotation} 0`);
-                box.setAttribute('width', 0.4);
+                box.setAttribute('width', 0.8);
                 box.setAttribute('height', height);
                 box.setAttribute('depth', 2);
                 box.setAttribute('color', color);
@@ -46,9 +46,9 @@
             }
         }
 
-        createRampart('#main-rampart', 80, 40, 0, 1.5, '#4D4A45');
-        createRampart('#secondary-rampart', 110, 60, 0, 1, '#F6C709');
-        createRampart('#tertiary-rampart', 130, 80, 0, 0.5, '#9EB717');
+        createRampart('#main-rampart', 80, 40, 0, 0.5, '#4D4A45');
+        createRampart('#secondary-rampart', 110, 60, 0, 0.25, '#F6C709');
+        createRampart('#tertiary-rampart', 130, 80, 0, 0.10, '#9EB717');
 
         AFRAME.registerComponent('dynamic-opacity', {
             init: function () {
@@ -72,30 +72,9 @@
 
         // Przypisanie komponentu do sceny
         document.querySelector('a-scene').setAttribute('dynamic-opacity', '');
-
-        AFRAME.registerComponent('smooth-gps', {
-            schema: {
-                speed: { type: 'number', default: 5 } // szybkość interpolacji
-            },
-            init: function () {
-                this.targetPosition = new THREE.Vector3();
-                this.currentPosition = new THREE.Vector3();
-            },
-            tick: function () {
-                const cameraEl = this.el;
-                const cameraPosition = new THREE.Vector3();
-                cameraEl.object3D.getWorldPosition(cameraPosition);
-
-                this.targetPosition.copy(cameraPosition);
-                this.currentPosition.lerp(this.targetPosition, this.data.speed * 0.01);
-
-                this.el.setAttribute('position', this.currentPosition);
-            }
-        });
-
     </script>
 
-    <a-camera smooth-gps gps-camera rotation-reader gpsMinDistance="0.5" positionMinAccuracy="30" gpsTimeInterval="0.5"></a-camera>
+    <a-camera gps-camera rotation-reader gpsMinDistance="0.5" positionMinAccuracy="30" gpsTimeInterval="0.5"></a-camera>
 </a-scene>
 </body>
 <script>alert(4);</script>
