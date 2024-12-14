@@ -11,7 +11,7 @@
 <body>
 <a-scene
         vr-mode-ui="enabled: false"
-        arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false; trackingMethod: best; enableGPSDebug: true"
+        arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
 >
 
 
@@ -64,7 +64,7 @@
                         const boxPosition = new THREE.Vector3();
                         box.object3D.getWorldPosition(boxPosition);
                         const distance = cameraPosition.distanceTo(boxPosition);
-                        const opacity = Math.max(0, 1 - distance / 50);
+                        const opacity = Math.max(0, 1 - distance / 100);
                         box.setAttribute('opacity', opacity);
                     });
                 };
@@ -73,11 +73,11 @@
 
         // Przypisanie komponentu do sceny
         document.querySelector('a-scene').setAttribute('dynamic-opacity', '');
+        alert(5);
     </script>
 
     <a-camera gps-camera rotation-reader gpsMinDistance="0.5" positionMinAccuracy="30" gpsTimeInterval="0.5"></a-camera>
 </a-scene>
 </body>
-<script>alert(4);</script>
 
 </html>

@@ -5,19 +5,41 @@
 <body>
 <a-scene>
 
-
-    <a-box
+    <a-entity
             scale="1 1 1"
-            color="#4D4A45"
-            gps-entity-place="latitude: 50.082796; longitude: 19.923808;">
-        <a-text
-                value="Box"
-                look-at="[gps-camera]"
-                scale="30 30 30"
-                position="0 10 0"
-        ></a-text>
-    </a-box>
+            gps-entity-place="latitude: 50.061702; longitude: 19.902871;"
+    >
+        <a-entity id="main-rampart"></a-entity>
+        <a-entity id="secondary-rampart"></a-entity>
+        <a-entity id="tertiary-rampart"></a-entity>
+    </a-entity>
+
     <script>
+        function createRampart(entityId, segments, radius, offsetY, height, color) {
+            const rampart = document.querySelector(entityId);
+            for (let i = 0; i < segments; i++) {
+                const angle = (i / segments) * Math.PI; // półokrąg (podkowa)
+                const x = radius * Math.cos(angle);
+                const z = radius * Math.sin(angle);
+                const rotation = (angle * 180) / Math.PI;
+
+                const box = document.createElement('a-box');
+                box.setAttribute('position', `${x} ${offsetY} ${z}`);
+                box.setAttribute('rotation', `0 ${-rotation} 0`);
+                box.setAttribute('width', 0.8);
+                box.setAttribute('height', height);
+                box.setAttribute('depth', 2);
+                box.setAttribute('color', color);
+                box.setAttribute('opacity', 1);
+                box.setAttribute('transparent', true);
+
+                rampart.appendChild(box);
+            }
+        }
+
+        createRampart('#main-rampart', 80, 40, 0, 0.5, '#4D4A45');
+        createRampart('#secondary-rampart', 110, 60, 0, 0.25, '#F6C709');
+        createRampart('#tertiary-rampart', 130, 80, 0, 0.10, '#9EB717');
 
         AFRAME.registerComponent('dynamic-opacity', {
             init: function () {
@@ -32,36 +54,15 @@
                         const boxPosition = new THREE.Vector3();
                         box.object3D.getWorldPosition(boxPosition);
                         const distance = cameraPosition.distanceTo(boxPosition);
-                        const opacity = Math.max(0, 1 - distance / 50);
+                        const opacity = Math.max(0, 1 - distance / 100);
                         box.setAttribute('opacity', opacity);
                     });
                 };
             }
         });
 
-        AFRAME.registerComponent('smooth-gps', {
-            schema: {
-                speed: { type: 'number', default: 50 } // szybkość interpolacji
-            },
-            init: function () {
-                this.targetPosition = new THREE.Vector3();
-                this.currentPosition = new THREE.Vector3();
-            },
-            tick: function () {
-                const cameraEl = this.el;
-                const cameraPosition = new THREE.Vector3();
-                cameraEl.object3D.getWorldPosition(cameraPosition);
-
-                this.targetPosition.copy(cameraPosition);
-                this.currentPosition.lerp(this.targetPosition, this.data.speed * 0.01);
-
-                this.el.setAttribute('position', this.currentPosition);
-            }
-        });
-
+        // Przypisanie komponentu do sceny
         document.querySelector('a-scene').setAttribute('dynamic-opacity', '');
-
-
     </script>
 
     <a-camera smooth-gps position="0 1.6 0"></a-camera>
