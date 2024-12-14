@@ -14,6 +14,12 @@
         arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
 >
 
+    <a-text
+            value="Grodzisko"
+            look-at="[gps-camera]"
+            scale="30 30 30"
+            gps-entity-place="latitude: 50.061702; longitude: 19.902871;"
+    ></a-text>
 
     <a-entity
             scale="1 1 1"
@@ -47,9 +53,9 @@
             }
         }
 
-        createRampart('#main-rampart', 80, 40, 0, 0.5, '#4D4A45');
-        createRampart('#secondary-rampart', 110, 60, 0, 0.25, '#F6C709');
-        createRampart('#tertiary-rampart', 130, 80, 0, 0.10, '#9EB717');
+        createRampart('#main-rampart', 40, 20, 0, 0.5, '#4D4A45');
+        createRampart('#secondary-rampart', 50, 30, 0, 0.25, '#F6C709');
+        createRampart('#tertiary-rampart', 70, 50, 0, 0.10, '#9EB717');
 
         AFRAME.registerComponent('dynamic-opacity', {
             init: function () {
@@ -64,7 +70,7 @@
                         const boxPosition = new THREE.Vector3();
                         box.object3D.getWorldPosition(boxPosition);
                         const distance = cameraPosition.distanceTo(boxPosition);
-                        const opacity = Math.max(0, 1 - distance / 100);
+                        const opacity = Math.max(0, 1 - distance / 50);
                         box.setAttribute('opacity', opacity);
                     });
                 };
@@ -73,7 +79,7 @@
 
         // Przypisanie komponentu do sceny
         document.querySelector('a-scene').setAttribute('dynamic-opacity', '');
-        alert(5);
+        alert(6);
     </script>
 
     <a-camera gps-camera rotation-reader gpsMinDistance="0.5" positionMinAccuracy="30" gpsTimeInterval="0.5"></a-camera>
