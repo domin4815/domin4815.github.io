@@ -10,10 +10,9 @@
 </head>
 
 <body>
-    <select id="cameraSelect"></select>
     <a-scene vr-mode-ui="enabled: false" arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;">
 
-        <a-entity scale="1 1 1" gps-entity-place="latitude: 50.061702; longitude: 19.902871;">
+        <a-entity scale="1 1 1" gps-entity-place="latitude: 50.083085; longitude: 19.924769;">
             <a-entity id="wall"></a-entity>
         </a-entity>
 
@@ -43,32 +42,11 @@
 
             createWall('#wall', 150);
 
-            // Function to get available video input devices
-            async function getCameras() {
-                const devices = await navigator.mediaDevices.enumerateDevices();
-                const videoDevices = devices.filter(device => device.kind === 'videoinput');
-                const cameraSelect = document.getElementById('cameraSelect');
-
-                videoDevices.forEach(device => {
-                    const option = document.createElement('option');
-                    option.value = device.deviceId;
-                    option.text = device.label || `Camera ${cameraSelect.length + 1}`;
-                    cameraSelect.appendChild(option);
-                });
-
-                cameraSelect.onchange = () => {
-                    const selectedDeviceId = cameraSelect.value;
-                    const arScene = document.querySelector('a-scene');
-                    arScene.setAttribute('arjs', `sourceType: webcam; deviceId: ${selectedDeviceId}; videoTexture: true; debugUIEnabled: false;`);
-                };
-            }
-
-            getCameras();
         </script>
 
 
         <a-camera smooth-gps gps-camera rotation-reader gpsMinDistance="0.5" positionMinAccuracy="30"
-            gpsTimeInterval="0.5"></a-camera>
+            gpsTimeInterval="0.5" arjs-look-controls='smoothingFactor: 0.1'></a-camera>
     </a-scene>
 </body>
 
