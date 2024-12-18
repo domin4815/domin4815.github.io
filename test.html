@@ -1,72 +1,46 @@
 <html>
+
 <head>
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
 </head>
+
 <body>
-<a-scene>
+    <a-scene>
+        <a-entity scale="1 1 1" gps-entity-place="latitude: 50.061702; longitude: 19.902871;">
+            <a-entity id="wall"></a-entity>
+        </a-entity>
 
-    <a-entity
-            scale="1 1 1"
-            gps-entity-place="latitude: 50.061702; longitude: 19.902871;"
-    >
-        <a-entity id="main-rampart"></a-entity>
-        <a-entity id="secondary-rampart"></a-entity>
-        <a-entity id="tertiary-rampart"></a-entity>
-    </a-entity>
 
-    <script>
-        function createRampart(entityId, segments, radius, offsetY, height, color) {
-            const rampart = document.querySelector(entityId);
-            for (let i = 0; i < segments; i++) {
-                const angle = (i / segments) * Math.PI; // półokrąg (podkowa)
-                const x = radius * Math.cos(angle);
-                const z = radius * Math.sin(angle);
-                const rotation = (angle * 180) / Math.PI;
+        <script>
+            function createWall(entityId, length) {
+                const wall = document.querySelector(entityId);
+                for (let i = 0; i < length; i++) {
+                    const x = i;
+                    const z = 0;
+                    const y = 0;
+                    const rotation = 0;
 
-                const box = document.createElement('a-box');
-                box.setAttribute('position', `${x} ${offsetY} ${z}`);
-                box.setAttribute('rotation', `0 ${-rotation} 0`);
-                box.setAttribute('width', 0.8);
-                box.setAttribute('height', height);
-                box.setAttribute('depth', 2);
-                box.setAttribute('color', color);
-                box.setAttribute('opacity', 1);
-                box.setAttribute('transparent', true);
+                    const box = document.createElement('a-box');
+                    box.setAttribute('position', `${x} ${y} ${z}`);
+                    box.setAttribute('rotation', `0 ${-rotation} 0`);
+                    box.setAttribute('width', 0.8);
+                    box.setAttribute('height', 2);
+                    box.setAttribute('depth', 0.5);
+                    box.setAttribute('color', '#F6C709');
+                    box.setAttribute('opacity', 0.5);
+                    box.setAttribute('transparent', true);
 
-                rampart.appendChild(box);
+                    wall.appendChild(box);
+                }
             }
-        }
 
-        createRampart('#main-rampart', 80, 40, 0, 0.5, '#4D4A45');
-        createRampart('#secondary-rampart', 110, 60, 0, 0.25, '#F6C709');
-        createRampart('#tertiary-rampart', 130, 80, 0, 0.10, '#9EB717');
+            createWall('#wall', 150);
 
-        AFRAME.registerComponent('dynamic-opacity', {
-            init: function () {
-                const cameraEl = document.querySelector('[camera]');
-                const scene = this.el.sceneEl;
-                const boxes = scene.querySelectorAll('a-box');
+        </script>
 
-                this.tick = () => {
-                    const cameraPosition = new THREE.Vector3();
-                    cameraEl.object3D.getWorldPosition(cameraPosition);
-                    boxes.forEach(box => {
-                        const boxPosition = new THREE.Vector3();
-                        box.object3D.getWorldPosition(boxPosition);
-                        const distance = cameraPosition.distanceTo(boxPosition);
-                        const opacity = Math.max(0, 1 - distance / 100);
-                        box.setAttribute('opacity', opacity);
-                    });
-                };
-            }
-        });
-
-        // Przypisanie komponentu do sceny
-        document.querySelector('a-scene').setAttribute('dynamic-opacity', '');
-    </script>
-
-    <a-camera smooth-gps position="0 1.6 0"></a-camera>
-    <a-sky color="#BCECEC"></a-sky>
-</a-scene>
+        <a-camera smooth-gps position="0 1.6 0"></a-camera>
+        <a-sky color="#BCECEC"></a-sky>
+    </a-scene>
 </body>
+
 </html>

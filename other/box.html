@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Rekonstrukcja</title>
@@ -9,90 +10,66 @@
 </head>
 
 <body>
-<a-scene
-        vr-mode-ui="enabled: false"
-        arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false; trackingMethod: best; enableGPSDebug: true"
->
+    <select id="cameraSelect"></select>
+    <a-scene vr-mode-ui="enabled: false" arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;">
 
-    <!--////////-->
+        <a-entity scale="1 1 1" gps-entity-place="latitude: 50.061702; longitude: 19.902871;">
+            <a-entity id="wall"></a-entity>
+        </a-entity>
 
-    <a-box
-            scale="1 1 1"
-            color="#4D4A45"
-            gps-entity-place="latitude: 50.082796; longitude: 19.923808;">
-        <a-text
-                value="Box"
-                look-at="[gps-camera]"
-                scale="30 30 30"
-                position="0 10 0"
-        ></a-text>
-    </a-box>
-    <a-text
-            id="distance-display"
-            value="Distance: Calculating..."
-            position="0 2 -3"
-            color="black"
-            align="center"
-            scale="2 2 2">
-    </a-text>
-    <script>
 
-        AFRAME.registerComponent('dynamic-opacity', {
-            init: function () {
-                const cameraEl = document.querySelector('[camera]');
-                const scene = this.el.sceneEl;
-                const boxes = scene.querySelectorAll('a-box');
-                const distanceDisplay = document.querySelector('#distance-display');
+        <script>
+            function createWall(entityId, length) {
+                const wall = document.querySelector(entityId);
+                for (let i = 0; i < length; i++) {
+                    const x = i;
+                    const z = 0;
+                    const y = 0;
+                    const rotation = 0;
 
-                this.tick = () => {
-                    const cameraPosition = new THREE.Vector3();
-                    cameraEl.object3D.getWorldPosition(cameraPosition);
+                    const box = document.createElement('a-box');
+                    box.setAttribute('position', `${x} ${y} ${z}`);
+                    box.setAttribute('rotation', `0 ${-rotation} 0`);
+                    box.setAttribute('width', 0.8);
+                    box.setAttribute('height', 2);
+                    box.setAttribute('depth', 0.5);
+                    box.setAttribute('color', '#F6C709');
+                    box.setAttribute('opacity', 0.5);
+                    box.setAttribute('transparent', true);
 
-                    boxes.forEach(box => {
-                        const boxPosition = new THREE.Vector3();
-                        box.object3D.getWorldPosition(boxPosition);
-                        const distance = cameraPosition.distanceTo(boxPosition);
+                    wall.appendChild(box);
+                }
+            }
 
-                        // Update UI with distance
-                        distanceDisplay.setAttribute('value', `Distance to box: ${distance.toFixed(2)} meters`);
+            createWall('#wall', 150);
 
-                        // Adjust opacity based on distance
-                        const opacity = Math.max(0, 1 - distance / 50);
-                        box.setAttribute('opacity', opacity);
-                    });
+            // Function to get available video input devices
+            async function getCameras() {
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                const videoDevices = devices.filter(device => device.kind === 'videoinput');
+                const cameraSelect = document.getElementById('cameraSelect');
+
+                videoDevices.forEach(device => {
+                    const option = document.createElement('option');
+                    option.value = device.deviceId;
+                    option.text = device.label || `Camera ${cameraSelect.length + 1}`;
+                    cameraSelect.appendChild(option);
+                });
+
+                cameraSelect.onchange = () => {
+                    const selectedDeviceId = cameraSelect.value;
+                    const arScene = document.querySelector('a-scene');
+                    arScene.setAttribute('arjs', `sourceType: webcam; deviceId: ${selectedDeviceId}; videoTexture: true; debugUIEnabled: false;`);
                 };
             }
-        });
 
-        document.querySelector('a-scene').setAttribute('dynamic-opacity', '');
+            getCameras();
+        </script>
 
-        AFRAME.registerComponent('smooth-gps', {
-            schema: {
-                speed: { type: 'number', default: 50 } // szybkość interpolacji
-            },
-            init: function () {
-                this.targetPosition = new THREE.Vector3();
-                this.currentPosition = new THREE.Vector3();
-            },
-            tick: function () {
-                const cameraEl = this.el;
-                const cameraPosition = new THREE.Vector3();
-                cameraEl.object3D.getWorldPosition(cameraPosition);
 
-                this.targetPosition.copy(cameraPosition);
-                this.currentPosition.lerp(this.targetPosition, this.data.speed * 0.01);
-
-                this.el.setAttribute('position', this.currentPosition);
-            }
-        });
-
-    </script>
-
-    <!--////////-->
-
-    <a-camera smooth-gps gps-camera rotation-reader gpsMinDistance="0.5" positionMinAccuracy="30" gpsTimeInterval="0.5"></a-camera>
-</a-scene>
+        <a-camera smooth-gps gps-camera rotation-reader gpsMinDistance="0.5" positionMinAccuracy="30"
+            gpsTimeInterval="0.5"></a-camera>
+    </a-scene>
 </body>
-<script>alert(1);</script>
 
 </html>
