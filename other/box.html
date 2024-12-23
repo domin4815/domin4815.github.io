@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Rekonstrukcja</title>
@@ -11,7 +10,6 @@
 
 <body>
     <a-scene vr-mode-ui="enabled: false" arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;">
-
         <a-entity scale="1 1 1" gps-entity-place="latitude: 50.080573; longitude: 19.927690;">
             <a-entity id="wall"></a-entity>
         </a-entity>
@@ -40,15 +38,11 @@
             }
 
             createWall('#wall', 20);
-            alert("Witaj w rekonstrukcji grodziska Zagórowa");
-
         </script>
-
+        
 
         <a-camera smooth-gps gps-camera rotation-reader gpsMinDistance="0.5" positionMinAccuracy="30"
-            gpsTimeInterval="0.5" arjs-look-controls='smoothingFactor: 0.1' ></a-camera>
-
+            gpsTimeInterval="0.5" arjs-look-controls='smoothingFactor: 0.1'></a-camera>
     </a-scene>
 </body>
-
 </html>
