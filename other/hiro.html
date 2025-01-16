@@ -5,7 +5,6 @@
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
-<!-- A-Frame Scene with AR.js integration -->
 <a-scene embedded arjs>
     <!-- Marker definition using 'hiro' -->
     <a-marker preset="hiro" id="marker">
@@ -29,78 +28,27 @@
       let lastPosition = { x: -0.5, y: 0.5, z: 0 };
       let lastRotation = { alpha: 0, beta: 0, gamma: 0 };
 
-      // Variables to store accelerometer, gyroscope, and magnetometer data
-      let acceleration = { x: 0, y: 0, z: 0 };
-      let orientation = { alpha: 0, beta: 0, gamma: 0 };
-      let magneticField = { x: 0, y: 0, z: 0 };
-
-      // Kalman filter initialization for position
-      const kalmanFilter = (function() {
-        const processNoise = 0.1; // Process noise
-        const measurementNoise = 1.0; // Measurement noise
-        let estimate = { x: 0, y: 0, z: 0 }; // Estimated position
-        let estimateError = { x: 1, y: 1, z: 1 }; // Estimate error
-
-        return function (measuredValue, axis) {
-          const kalmanGain = estimateError[axis] / (estimateError[axis] + measurementNoise);
-          estimate[axis] = estimate[axis] + kalmanGain * (measuredValue - estimate[axis]);
-          estimateError[axis] = (1 - kalmanGain) * estimateError[axis] + Math.abs(estimate[axis] * processNoise);
-          return estimate[axis];
-        };
-      })();
-
       // Handle device orientation (gyroscope data)
       window.addEventListener("deviceorientation", function (event) {
         if (!markerVisible) {
-          // Save the current gyroscope data
-          orientation.alpha = event.alpha;
-          orientation.beta = event.beta;
-          orientation.gamma = event.gamma;
+          // If marker is not visible, update position based on device orientation
+          const alpha = event.alpha;  // rotation around Z axis
+          const beta = event.beta;    // rotation around X axis
+          const gamma = event.gamma;  // rotation around Y axis
 
-          // Update the rotation of the box based on gyroscope data
-          box.setAttribute("rotation", {
-            x: orientation.alpha,
-            y: orientation.beta,
-            z: orientation.gamma,
-          });
-        }
-      });
-
-      // Handle device motion (accelerometer data)
-      window.addEventListener("devicemotion", function (event) {
-        if (!markerVisible) {
-          // Save accelerometer data
-          acceleration.x = event.acceleration.x;
-          acceleration.y = event.acceleration.y;
-          acceleration.z = event.acceleration.z;
-
-          // Apply Kalman filter to smooth position changes
-          const smoothedX = kalmanFilter(acceleration.x, 'x');
-          const smoothedY = kalmanFilter(acceleration.y, 'y');
-          const smoothedZ = kalmanFilter(acceleration.z, 'z');
-
-          // Update position using filtered accelerometer data
+          // Use simple math to estimate new position based on orientation data
+          // (here we're simply updating the box position for demonstration purposes)
           box.setAttribute("position", {
-            x: lastPosition.x + smoothedX / 10,
-            y: lastPosition.y + smoothedY / 10,
-            z: lastPosition.z + smoothedZ / 10,
+            x: lastPosition.x + (alpha / 100),
+            y: lastPosition.y + (beta / 100),
+            z: lastPosition.z + (gamma / 100),
           });
-        }
-      });
 
-      // Handle magnetometer data (if available)
-      window.addEventListener("deviceorientationabsolute", function (event) {
-        if (!markerVisible) {
-          // Save the current magnetometer data (azimuthal rotation)
-          magneticField.x = event.alpha;
-          magneticField.y = event.beta;
-          magneticField.z = event.gamma;
-
-          // Update the box's rotation based on the magnetometer data (orient to magnetic north)
+          // Optionally update rotation based on orientation
           box.setAttribute("rotation", {
-            x: magneticField.x,
-            y: magneticField.y,
-            z: magneticField.z,
+            x: lastRotation.alpha,
+            y: lastRotation.beta,
+            z: lastRotation.gamma,
           });
         }
       });
@@ -108,7 +56,7 @@
       // Listen to the marker visibility
       marker.addEventListener("markerLost", function () {
         markerVisible = false;
-        console.log("Marker lost! Estimating position using gyroscope, accelerometer, and magnetometer...");
+        console.log("Marker lost! Estimating position using gyroscope...");
       });
 
       marker.addEventListener("markerFound", function () {
