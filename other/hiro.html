@@ -61,12 +61,17 @@
 
       marker.addEventListener("markerFound", function () {
         markerVisible = true;
-        console.log("Marker found! Using marker-based position...");
+        console.log("Marker found! Resetting position to marker-based coordinates...");
+
+        // Reset the box position and rotation when marker is found
+        box.setAttribute("position", { x: 0, y: 0, z: 0 });  // Reset to initial position
+        box.setAttribute("rotation", { x: 0, y: 0, z: 0 });  // Reset to initial rotation
 
         // When the marker is found, we save its position and rotation
         const position = box.getAttribute("position");
         const rotation = box.getAttribute("rotation");
 
+        // Store the initial position and rotation values
         lastPosition = { x: position.x, y: position.y, z: position.z };
         lastRotation = { alpha: rotation.x, beta: rotation.y, gamma: rotation.z };
       });
