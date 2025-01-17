@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/ar.js/aframe/build/aframe-ar.min.js"></script>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
+<!-- A-Frame Scene with AR.js integration -->
 <a-scene embedded arjs>
-    <!-- Marker hiro -->
+    <!-- Marker definition using 'hiro' -->
     <a-marker preset="hiro">
-        <!-- Chatka przesunięta o 20 metrów w osi Z -->
+        <!-- 3D object (box) displayed to the left of the marker -->
         <a-entity
                 gltf-model="url(../img/forest_hut.glb)"
                 position="0 0 -20"
@@ -15,9 +17,8 @@
         </a-entity>
     </a-marker>
 
-    <!-- Światło dla lepszej widoczności -->
-    <a-light type="directional" position="0 10 10" intensity="1"></a-light>
-    <a-light type="ambient" intensity="0.5"></a-light>
+    <!-- Camera element to render the AR scene -->
+    <a-entity camera></a-entity>
 </a-scene>
 </body>
 </html>
