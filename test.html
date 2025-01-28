@@ -6,37 +6,13 @@
 
 <body>
     <a-scene>
-        <a-entity scale="1 1 1" gps-entity-place="latitude: 50.061702; longitude: 19.902871;">
-            <a-entity id="wall"></a-entity>
+        <a-entity position="0 0 0" >
+            <a-ring color="#FFFFFF" rotation="0 0 0"  radius-inner="1.9" radius-outer="2" position="0 0 0">
+            </a-ring>
+            <a-sky src="url(../img/glanow.jpeg)" radius="50" position="0 0 -10"></a-sky>
+
         </a-entity>
 
-
-        <script>
-            function createWall(entityId, length) {
-                const wall = document.querySelector(entityId);
-                for (let i = 0; i < length; i++) {
-                    const x = i;
-                    const z = 0;
-                    const y = 0;
-                    const rotation = 0;
-
-                    const box = document.createElement('a-box');
-                    box.setAttribute('position', `${x} ${y} ${z}`);
-                    box.setAttribute('rotation', `0 ${-rotation} 0`);
-                    box.setAttribute('width', 0.8);
-                    box.setAttribute('height', 2);
-                    box.setAttribute('depth', 0.5);
-                    box.setAttribute('color', '#F6C709');
-                    box.setAttribute('opacity', 0.5);
-                    box.setAttribute('transparent', true);
-
-                    wall.appendChild(box);
-                }
-            }
-
-            createWall('#wall', 150);
-
-        </script>
 
         <a-camera smooth-gps position="0 1.6 0"></a-camera>
         <a-sky color="#BCECEC"></a-sky>
