@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>GeoAR.js Demo</title>
+
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+
+
+</head>
+
+<body>
+    <a-scene vr-mode-ui="enabled: false" arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;">
+
+        <a-camera id="camera" rotation-reader fov="70" aspect="1.5"></a-camera>
+
+        <a-sky id="sky" src="../img/limestone_tower_grey_sky.jpg" phi-start="230"></a-sky>
+
+        <script>
+            // Adjust the aspect ratio dynamically based on custom horizontal FOV (e.g., 100° horizontal)
+            const verticalFOV = 80;  // Vertical FOV in degrees
+            const desiredHorizontalFOV = 60; // Horizontal FOV in degrees
+
+            // Calculate the aspect ratio using the formula for horizontal FOV
+            const aspectRatio = Math.tan(Math.PI * (desiredHorizontalFOV / 360)) / Math.tan(Math.PI * (verticalFOV / 360));
+
+            // Update the camera with the new aspect ratio
+            document.querySelector("#camera").setAttribute("aspect", aspectRatio);
+
+        </script>
+
+    </a-scene>
+</body>
+
+</html>
